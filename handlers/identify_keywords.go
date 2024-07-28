@@ -5,8 +5,6 @@ import (
 	"backend/google_crawler"
 	"net/http"
 
-	"log"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,21 +26,18 @@ func IdentifyKeyWords(c *gin.Context) {
 	}
 
 	if err := c.BindJSON(&request); err != nil {
-		log.Printf("Failed to bind JSON: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	results, err := google_crawler.CrawlGoogle(request.Terms)
 	if err != nil {
-		log.Printf("Failed to crawl Google: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to crawl Google"})
 		return
 	}
 
 	// Process and send email
 	if err := email.DefaultEmailSender.Send(request.Email, "Search Results", results); err != nil {
-		log.Printf("Failed to send email: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send email"})
 		return
 	}
