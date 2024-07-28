@@ -20,7 +20,7 @@ func (s *SMTPEmailSender) Send(to string, subject string, body string) error {
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", body)
 
-	d := gomail.NewDialer("smtp.gmail.com", 587, "ciebinho.embetant@gmail.com", "jacz rqjo zxbd pcat")
+	d := gomail.NewDialer("smtp.gmail.com", 587, "cledson.silva.teste@gmail.com", "jacz rqjo zxbd pcat")
 
 	return d.DialAndSend(m)
 }
