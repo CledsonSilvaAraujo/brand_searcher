@@ -15,12 +15,12 @@ type SMTPEmailSender struct{}
 // Send sends an email with the specified subject and body to the given recipient.
 func (s *SMTPEmailSender) Send(to string, subject string, body string) error {
 	m := gomail.NewMessage()
-	m.SetHeader("From", "you@example.com")
+	m.SetHeader("From", "cledson.silva.teste@gmail.com")
 	m.SetHeader("To", to)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/plain", body)
 
-	d := gomail.NewDialer("smtp.example.com", 587, "user", "123456")
+	d := gomail.NewDialer("smtp.gmail.com", 587, "ciebinho.embetant@gmail.com", "jacz rqjo zxbd pcat")
 
 	return d.DialAndSend(m)
 }
