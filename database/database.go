@@ -44,11 +44,15 @@ func SaveResultsToMongo(term string, results string) {
 	links := strings.Split(results, "\n")
 
 	for _, link := range links {
+
 		searchResult := models.SearchResult{
-			ID:    primitive.NewObjectID(),
-			Term:  term,
-			Title: "",
-			Link:  link,
+			ID:   primitive.NewObjectID(),
+			Term: term,
+			Link: link,
+		}
+		if link == "" {
+			log.Printf("Link not found: %v", link)
+			continue
 		}
 		_, err := collection.InsertOne(context.TODO(), searchResult)
 		if err != nil {
