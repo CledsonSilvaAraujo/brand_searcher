@@ -12,18 +12,18 @@ import (
 )
 
 func main() {
-	// Carregar variáveis de ambiente do arquivo .env
+	// Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("No .env file found")
 	}
 
-	// Conecte-se ao MongoDB
+	// Connect to MongoDB
 	database.Connect()
 
 	router := gin.Default()
 
-	// Configurar CORS para permitir requisições do frontend
+	// Configure CORS to allow requests from the frontend
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{os.Getenv("FRONTEND_URI")},
 		AllowMethods:     []string{"POST"},
@@ -32,9 +32,10 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	router.POST("/identify-key-words", handlers.IdentifyKeyWords)
+	// Define the /api/identify-key-words route
+	router.POST("/api/identify-key-words", handlers.IdentifyKeyWords)
 
-	// Usar a variável de ambiente PORT para definir a porta do servidor
+	// Use the PORT environment variable to define the server port
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
