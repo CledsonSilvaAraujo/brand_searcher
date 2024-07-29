@@ -41,24 +41,28 @@ func GetCollection(databaseName, collectionName string) *mongo.Collection {
 func SaveResultsToMongo(term string, results string) {
 	collection := GetCollection("brand_monitor", "search_results")
 
-	links := strings.Split(results, "\n")
-
-	for _, link := range links {
-
-		searchResult := models.SearchResult{
-			ID:   primitive.NewObjectID(),
-			Term: term,
-			Link: link,
-		}
-		if link == "" {
-			log.Printf("Link not found: %v", link)
-			continue
-		}
-		_, err := collection.InsertOne(context.TODO(), searchResult)
-		if err != nil {
-			log.Printf("Could not insert result: %v", err)
-		} else {
-			log.Println("Result inserted successfully")
+	lines := strings.Split(results, "\n")
+	var title string
+	var link string
+	for i := 0; i < len(lines); i++ {
+		if strings.HasPrefix(lines[i], "Title: ") {
+			title = strings.TrimPrefix(lines[i], "Title: ")
+		} else if strings.HasPrefix(lines[i], "Link: ") {
+			link = strings.TrimPrefix(lines[i], "Link: ")
+			searchResult := models.SearchResult{
+				ID:    primitive.NewObjectID(),
+				Term:  term,
+				Title: title,
+				Link:  link,
+			}
+			_, err := collection.InsertOne(context.TODO(), searchResult)
+			if err != nil {
+				log.Printf("Could not insert result: %v", err)
+			} else {
+				log.Println("Result inserted successfully")
+			}
+			title = "" // Reset title after saving the result
+			link = ""  // Reset link after saving the result
 		}
 	}
 }
