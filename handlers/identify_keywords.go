@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"backend/database"
 	"backend/email"
 	"backend/google_crawler"
 	"net/http"
@@ -41,6 +42,9 @@ func IdentifyKeyWords(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send email"})
 		return
 	}
+
+	// Save results to MongoDB
+	database.SaveResultsToMongo(request.Terms, results)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Thank you! The diagnosis will be processed and sent to your email."})
 }
