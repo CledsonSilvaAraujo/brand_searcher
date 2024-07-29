@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -16,7 +17,12 @@ import (
 var Client *mongo.Client
 
 func Connect() {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	mongoURI := os.Getenv("MONGO_URI")
+	if mongoURI == "" {
+		log.Fatal("MONGO_URI environment variable is required")
+	}
+
+	clientOptions := options.Client().ApplyURI(mongoURI)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -61,8 +67,8 @@ func SaveResultsToMongo(term string, results string) {
 			} else {
 				log.Println("Result inserted successfully")
 			}
-			title = "" // Reset title after saving the result
-			link = ""  // Reset link after saving the result
+			title = ""
+			link = ""
 		}
 	}
 }
