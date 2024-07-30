@@ -36,8 +36,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		AllowCredentials: true,
 	}))
 
-	// Define the /identify-key-words route
-	router.POST("/identify-key-words", handlers.IdentifyKeyWords)
+	// Define the /api/identify-key-words route
+	router.POST("/api/identify-key-words", handlers.IdentifyKeyWords)
+
+	// Define the root route
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Welcome to the Go Gin Brand Searcher API!",
+		})
+	})
 
 	router.ServeHTTP(w, r)
 }
