@@ -23,7 +23,7 @@ func init() {
 	database.Connect()
 }
 
-// Handler function that Vercel will use
+// Handler function that Render will use
 func Handler(w http.ResponseWriter, r *http.Request) {
 	router := gin.Default()
 
