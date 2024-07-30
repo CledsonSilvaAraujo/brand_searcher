@@ -36,7 +36,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		AllowCredentials: true,
 	}))
 
-	// Define the /api/identify-key-words route
+	// Define the /identify-key-words route
 	router.POST("/identify-key-words", handlers.IdentifyKeyWords)
 
 	router.ServeHTTP(w, r)
