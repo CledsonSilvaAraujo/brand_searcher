@@ -21,6 +21,11 @@ func init() {
 
 	// Connect to MongoDB
 	database.Connect()
+
+	// Set Gin to release mode in production
+	if os.Getenv("GIN_MODE") == "release" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 }
 
 // Handler function that Render will use
@@ -37,7 +42,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}))
 
 	// Define the /api/identify-key-words route
-	router.POST("/api/identify-key-words", handlers.IdentifyKeyWords)
+	router.POST("/identify-key-words", handlers.IdentifyKeyWords)
 
 	// Define the root route
 	router.GET("/", func(c *gin.Context) {
@@ -56,7 +61,7 @@ func main() {
 		port = "8080"
 	}
 
-	// Start the serve
+	// Start the server
 	log.Printf("Starting server on port %s", port)
 	if err := http.ListenAndServe(":"+port, http.HandlerFunc(Handler)); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
