@@ -1,5 +1,6 @@
 #DOC
 http://localhost:8080/swagger/index.html
+https://brand-searcher.onrender.com/swagger/index.html
 swagger init 
 #Testing
 go test ./...
@@ -7,5 +8,8 @@ go test ./...
 #Rodando o projeto
 go run main.go
 
-#Front end
+#Brand Monitor
 https://brand-searcher-frontend.onrender.com/
+
+#Deployed
+https://dashboard.render.com/
