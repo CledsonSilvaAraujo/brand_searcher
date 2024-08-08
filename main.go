@@ -7,9 +7,13 @@ import (
 	"net/http"
 	"os"
 
+	_ "backend/docs" // Certifique-se de que este caminho está correto e que os arquivos foram gerados pelo swag init
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func init() {
@@ -50,6 +54,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			"message": "Welcome to the Go Gin Brand Searcher API!",
 		})
 	})
+
+	// Swagger endpoint
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	router.ServeHTTP(w, r)
 }

@@ -1,11 +1,5 @@
-basePath: /
-host: localhost:8080
 info:
   contact: {}
-  description: Esta é a API para monitorar concorrentes usando termos de marca no
-    Google.
-  title: API de Monitoramento de Concorrentes
-  version: "1.0"
 paths:
   /identify-key-words:
     post:

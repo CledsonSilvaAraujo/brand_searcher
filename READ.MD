@@ -1,6 +1,6 @@
 #DOC
 http://localhost:8080/swagger/index.html
-
+swagger init 
 #Testing
 go test ./...
 

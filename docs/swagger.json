@@ -1,13 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Esta é a API para monitorar concorrentes usando termos de marca no Google.",
-        "title": "API de Monitoramento de Concorrentes",
-        "contact": {},
-        "version": "1.0"
+        "contact": {}
     },
-    "host": "localhost:8080",
-    "basePath": "/",
     "paths": {
         "/identify-key-words": {
             "post": {
